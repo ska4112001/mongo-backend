@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 // Connect to MongoDB once and start the server
 client.connect()
   .then(() => {
-    db = client.db('Manifest');
+    db = client.db('manifest');
     app.listen(PORT, () => {
       console.log(`✅ Server running on port ${PORT}`);
     });
