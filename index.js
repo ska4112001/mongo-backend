@@ -125,7 +125,11 @@ app.post('/check-voucher', async (req, res) => {
 
   try {
     const collection = db.collection('passengers');
-    const passenger = await collection.findOne({ firstName, lastName });
+    const passenger = await collection.findOne({
+  firstName: { $regex: `^${firstName.trim()}$`, $options: 'i' },
+  lastName: { $regex: `^${lastName.trim()}$`, $options: 'i' }
+});
+
 
     if (passenger) {
       res.json({ voucher: passenger.voucher || null });
