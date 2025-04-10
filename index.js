@@ -60,7 +60,7 @@ app.post('/add-voucher', async (req, res) => {
 
   try {
     const collection = db.collection('Passengers');
-    const filter = { flightNum };
+    const filter = { flightNum: { $regex: `^${flightNum}$`, $options: 'i' } };
     const update = { $set: { voucher } };
     const result = await collection.updateMany(filter, update);
 
