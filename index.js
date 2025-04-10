@@ -60,7 +60,8 @@ app.post('/add-voucher', async (req, res) => {
 
   try {
     const collection = db.collection('Passengers');
-    const filter = { flightNum: { $regex: `^${flightNum}$`, $options: 'i' } };
+    const filter = { flightNum: { $regex: `^${flightNum.trim()}$`, $options: 'i' } };
+
     const update = { $set: { voucher } };
     const result = await collection.updateMany(filter, update);
 
@@ -92,7 +93,10 @@ app.post('/apply-pass-voucher', async (req, res) => {
 
   try {
     const collection = db.collection('Passengers');
-    const filter = { firstName, lastName };
+    const filter = {
+  firstName: { $regex: `^${firstName.trim()}$`, $options: 'i' },
+  lastName: { $regex: `^${lastName.trim()}$`, $options: 'i' }
+};
     const update = { $set: { voucher } };
     const result = await collection.updateMany(filter, update);
 
