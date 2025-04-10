@@ -51,6 +51,8 @@ app.get('/test', async (req, res) => {
  */
 app.post('/add-voucher', async (req, res) => {
   const { flightNum, voucher } = req.body;
+  console.log("Received flightNum:", flightNum);
+  console.log("Received voucher:", voucher);
 
   if (!flightNum || !voucher) {
     return res.status(400).json({ error: 'flightNum and voucher are required' });
