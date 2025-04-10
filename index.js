@@ -124,7 +124,7 @@ app.post('/check-voucher', async (req, res) => {
   }
 
   try {
-    const collection = db.collection('Passengers');
+    const collection = db.collection('passengers');
     const passenger = await collection.findOne({ firstName, lastName });
 
     if (passenger) {
