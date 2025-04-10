@@ -111,3 +111,28 @@ app.post('/apply-pass-voucher', async (req, res) => {
     res.status(500).json({ error: `Failed to apply voucher: ${err.message}` });
   }
 });
+
+/**
+ * Route: /check-voucher
+ * Returns the voucher (if any) for a passenger with the given first and last name
+ */
+app.post('/check-voucher', async (req, res) => {
+  const { firstName, lastName } = req.body;
+
+  if (!firstName || !lastName) {
+    return res.status(400).json({ error: 'firstName and lastName are required' });
+  }
+
+  try {
+    const collection = db.collection('Passengers');
+    const passenger = await collection.findOne({ firstName, lastName });
+
+    if (passenger) {
+      res.json({ voucher: passenger.voucher || null });
+    } else {
+      res.status(404).json({ error: 'Passenger not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to check voucher: ' + err.message });
+  }
+});
