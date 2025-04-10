@@ -59,7 +59,7 @@ app.post('/add-voucher', async (req, res) => {
   }
 
   try {
-    const collection = db.collection('Passengers');
+    const collection = db.collection('passengers');
     const filter = { flightNum: { $regex: `^${flightNum.trim()}$`, $options: 'i' } };
 
     const update = { $set: { voucher } };
@@ -92,7 +92,7 @@ app.post('/apply-pass-voucher', async (req, res) => {
   }
 
   try {
-    const collection = db.collection('Passengers');
+    const collection = db.collection('passengers');
     const filter = {
   firstName: { $regex: `^${firstName.trim()}$`, $options: 'i' },
   lastName: { $regex: `^${lastName.trim()}$`, $options: 'i' }
