@@ -87,7 +87,7 @@ app.post('/apply-pass-voucher', async (req, res) => {
   console.log("Received Last Name:", lastName);
   console.log("Received voucher:", voucher);
 
-  if (!firstName || !lastName || !voucher) {
+  if (!firstName || !lastName || voucher==undefined) {
     return res.status(400).json({ error: 'firstName, lastName, and voucher are required' });
   }
 
