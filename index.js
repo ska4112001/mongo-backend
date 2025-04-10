@@ -82,6 +82,9 @@ app.post('/add-voucher', async (req, res) => {
  */
 app.post('/apply-pass-voucher', async (req, res) => {
   const { firstName, lastName, voucher } = req.body;
+  console.log("Recieved First Name:", firstName);
+  console.log("Received Last Name:", lastName);
+  console.log("Received voucher:", voucher);
 
   if (!firstName || !lastName || !voucher) {
     return res.status(400).json({ error: 'firstName, lastName, and voucher are required' });
