@@ -140,3 +140,61 @@ app.post('/check-voucher', async (req, res) => {
     res.status(500).json({ error: 'Failed to check voucher: ' + err.message });
   }
 });
+
+/**
+ * Route: /check-flight
+ * Returns the the flight number of the passenger to check for delays
+ */
+app.post('/check-flight', async (req, res) => {
+  const { firstName, lastName } = req.body;
+
+  if (!firstName || !lastName) {
+    return res.status(400).json({ error: 'firstName and lastName are required' });
+  }
+
+  try {
+    const collection = db.collection('passengers');
+    const passenger = await collection.findOne({
+  firstName: { $regex: `^${firstName.trim()}$`, $options: 'i' },
+  lastName: { $regex: `^${lastName.trim()}$`, $options: 'i' }
+});
+
+
+    if (passenger) {
+      res.json({ flightNum: passenger.flightNum });
+    } else {
+      res.status(404).json({ error: 'Passenger not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to check flight number: ' + err.message });
+  }
+});
+
+/**
+ * Route: /check-delay
+ * Returns the voucher (if any) for a passenger with the given first and last name
+ */
+app.post('/check-delay', async (req, res) => {
+  const { flightNum } = req.body;
+
+  if (!flightNum) {
+    return res.status(400).json({ error: 'Flight Number is required' });
+  }
+
+  try {
+    const collection = db.collection('flights');
+    const flight = await collection.findOne({
+  flightNum: { $regex: `^${flightNum.trim()}$`, $options: 'i' }
+});
+
+
+    if (flight) {
+      res.json({ delay: flights.delay});
+    } else {
+      res.status(404).json({ error: 'Flight not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to check flight: ' + err.message });
+  }
+});
+
