@@ -189,7 +189,7 @@ app.post('/check-delay', async (req, res) => {
 
 
     if (flight) {
-      res.json({ delay: flights.delay});
+      res.json({ delay: flight.delay});
     } else {
       res.status(404).json({ error: 'Flight not found' });
     }
