@@ -138,6 +138,7 @@ app.post('/check-voucher', async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ error: 'Failed to check voucher: ' + err.message });
+    console.log(err.message);
   }
 });
 
